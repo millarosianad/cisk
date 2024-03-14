@@ -1,0 +1,1 @@
+<br /><form><INPUT TYPE="button" VALUE="Back" onClick="history.go(-1);return true;"></form><?php    ///echo isset($add)? $add:'';    echo br(1);    //if(isset($sum))    //{echo '<h1>Total Outlet : '.$sum.'</h1>'.br(2);}    //echo isset($pagination)?$pagination:'';    echo $query;    //echo isset($pagination)?$pagination:'';?>

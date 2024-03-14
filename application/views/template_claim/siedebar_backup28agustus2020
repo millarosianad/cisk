@@ -1,0 +1,47 @@
+<nav class="pcoded-navbar">
+    <div class="nav-list">
+        <div class="pcoded-inner-navbar main-menu">
+            <div class="pcoded-navigation-label">Navigasi Menu</div>
+            <ul class="pcoded-item pcoded-left-item">            
+            <?php   
+                foreach ($get_group_menu as $key) 
+                {             
+                    $aktif = $this->uri->segment('1');
+                    $groupname = strtolower($key->groupname); 
+                    if ($aktif == $groupname) { ?>
+                        <li class="pcoded-hasmenu active pcoded-trigger"> 
+                    <?php }else{ ?>
+                        <li class="pcoded-hasmenu">
+                    <?php } ?>                
+                            <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="<?php echo $key->icon; ?>"></i></span>
+                                <span class="pcoded-mtext"><?php echo $key->groupname; ?></span>
+                            </a>
+                    
+                    <?php 
+                            $id = $this->session->userdata('id');
+                            $sql = " 
+                            SELECT a.id, a.menuview, a.target, a.groupname, c.icon
+                            FROM mpm.menu a INNER JOIN mpm.menudetail b 
+                                    ON a.id = b.menuid LEFT JOIN mpm.groupmenu c on a.groupid = c.id
+                            WHERE b.userid = '$id' AND a.active = 1 and a.groupid = '$key->groupid' 
+                            ORDER BY a.groupname,a.menuview
+                            ";
+                            $hasil = $this->db->query($sql)->result();                    
+                            foreach ($hasil as $key) { 
+                            $aktif_sub = $this->uri->segment('2');
+                    ?>
+                            <ul class="pcoded-submenu">
+                                <li class="<?php if($aktif_sub == strtolower($key->menuview)){ echo "active"; } ?>">
+                                    <a href="<?php echo base_url().$key->target; ?>" class="waves-effect waves-dark">
+                                        <span class="pcoded-mtext"><?php echo $key->menuview; ?></span>
+                                    </a>
+                                </li>
+                            </ul>
+                    <?php } ?>
+                        </li>
+            <?php } ?>
+            </ul>
+        </div>
+    </div>
+</nav>

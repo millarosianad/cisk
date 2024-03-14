@@ -1,0 +1,242 @@
+<script type="text/javascript" language="javascript" src="<?php echo base_url() ?>assets_new/js/ticket.js"></script>
+
+<script type="text/javascript">                   
+        $(document).ready(function() { 
+            
+
+            $("#cek_po").click(function(){
+
+                
+                const from = $("#from").val();
+                const to = $("#to").val();                
+                console.log(from);
+                console.log(to);
+
+                // var url = document.location.href+"/"+from+"/"+to;
+                // document.location = url;
+
+                // $.ajax({
+                //     var url = document.location.href+"/"+from+"/"+to;
+                //     document.location = url;
+                // url:"<?php echo base_url(); ?>help/get_periode",     
+                // data: {
+                //     from: from,
+                //     to: to
+                //     },
+                // type: "POST",
+                // success: function(data){
+                //     console.log(data);
+                //     // $("#program").html(data);
+                //     }
+                // });
+
+
+
+                // $.ajax({
+                // url:"<?php echo base_url(); ?>monitor_claim/get_program_by_periode",     
+                // data: {
+                //     from: from,
+                //     to: to
+                //     },
+                // type: "POST",
+                // success: function(data){
+                //     console.log(data);
+                //     $("#program").html(data);
+                //     }
+                // });
+            });
+
+           
+
+        });                    
+    </script>
+
+<script type="text/javascript">
+    $(function () {
+        $(".identifyingClass").click(function () {
+            var my_id_value = $(this).data('id');
+            $(".modal-body #hiddenValue").val(my_id_value);
+        })
+    });
+</script>
+
+
+
+<?php echo form_open($url); ?>
+<div class="col-xs-16">
+    <a href="<?php echo base_url()."help/view_ticket"; ?>  " class="btn btn-dark" role="button"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> View Ticket</a>
+    <hr>
+</div>
+<div>
+    <font color="red">
+        <?php 
+            echo validation_errors(); 
+            echo br(1);
+        ?>
+    </font>
+</div> 
+
+<div class="card">
+
+    <div class="col-sm-12">
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Nama Ticket</label>
+            <div class="col-sm-9">
+                <div class="col-sm-6">
+                    <input class="form-control" type="text" name="nama_ticket" required />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-12">
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">PO From</label>
+            <div class="col-sm-9">
+                <div class="col-sm-6">
+                    <input class="form-control" type="date" name="from" id="from" required />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-12">
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">PO To</label>
+            <div class="col-sm-9">
+                <div class="col-sm-6">
+                    <input class="form-control" type="date" name="to" id="to" required />
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="col-sm-12">
+        <div class="form-group row">            
+            <div class="col-sm-2"></div>
+            <div class="col-sm-9">
+                <div class="col-sm-6">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Search PO</button>
+                    <!-- <?php echo form_submit('submit','Search PO', 'class="btn btn-success"');?>
+                    <?php echo form_close();?> -->
+                    <!-- <input type="button" class="btn btn-primary btn-sm" id="search_po" value="search" onclick="search_po()" > -->
+                      
+                    <button type="button" class="btn btn-info" id = "cek_po" data-toggle="modal" data-target="#exampleModal" data-id="my_id_value">Get PO</button>
+
+
+                    <a href="#" data-target="#my_modal" data-toggle="modal" class="identifyingClass" data-id="my_id_value">Open Modal</a>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+
+
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">List PO</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="card table-card">
+            <div class="card-header">
+            <div class="card-block">
+            <div class="dt-responsive table-responsive">
+                <table id="multi-colum-dt" class="table table-striped table-bordered nowrap">    
+                <div class="row"> 
+        <div class="col-xs-12">
+            <div class="col-xs-12">
+            <thead>
+                <tr>                
+                    <th width="1"><font size="2px">no</th>
+                    <th width="1"><font size="2px">id</th>
+                    <th><font size="2px">Nomor PO</th>
+                    <th><font size="2px">Tgl PO</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php 
+            $no = 1;
+            foreach($get_po as $a) : ?>
+                <tr>                      
+                    <td><font size="2px"><?php echo $no++; ?></td>
+                    <td><font size="2px"><?php echo $a->id; ?></td>
+                    <td><font size="2px"><?php echo $a->nopo; ?></td>
+                    <td><font size="2px"><?php echo $a->tglpo; ?></td>
+                </tr>
+            <?php endforeach; ?>
+            
+            </tbody>
+            <tfoot>
+                <tr>                
+                    <th width="1"><font size="2px">id</th>
+                    <th><font size="2px">Nomor Po</th>
+            </tr>
+            </tfoot>
+            </table>
+            </div>
+                <div class="col-xs-11">&nbsp; </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+        </div>
+    </div>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            $('#multi-colum-dt').DataTable( {
+                "ordering": false,
+                "lengthMenu": [[10, 25, 50, 100, 150, -1], [10, 25, 50, 100, 150, "All"]]
+            });
+        });
+
+        function search_po(){
+            console.log('testtest')
+            // var button = document.getElementById('toggle');
+            // var Box = document.getElementsByTagName('input');
+            // if(button.value == 'select all'){
+            //     for(i=0; i < Box.length; i++)
+            //     {
+            //         if ( Box [i].className == "001G0101" || Box [i].className == "001G0102" || Box [i].className == "001G0103" || Box [i].className == "005G0501" || Box [i].className == "005G0502" || Box [i].className == "005G0503" || Box [i].className == "005G0504" || Box [i].className == "005G0505" || Box [i].className == "005G0506" || Box [i].className == "002G0201" || Box [i].className == "002G0202" || Box [i].className == "004G0401" || Box [i].className == "012" || Box [i].className == "013" || Box [i].className == "014" || Box [i].className == "010" )
+            //         {
+            //             Box [i].checked = true;
+            //             button.value = 'clear all'; 
+            //             button.className = "btn btn-success"; 
+            //         }else{
+            //         }
+            //     }
+
+            // }else{
+            //     for(i=0; i < Box.length; i++)
+            //     {
+            //         if ( Box [i].className == "001G0101" || Box [i].className == "001G0102" || Box [i].className == "001G0103" || Box [i].className == "005G0501" || Box [i].className == "005G0502" || Box [i].className == "005G0503" || Box [i].className == "005G0504" || Box [i].className == "005G0505" || Box [i].className == "005G0506" || Box [i].className == "002G0201" || Box [i].className == "002G0202" || Box [i].className == "004G0401" || Box [i].className == "012" || Box [i].className == "013" || Box [i].className == "014" || Box [i].className == "010" )
+            //         {
+            //             Box [i].checked = false;
+            //             button.value = 'select all'; 
+            //             button.className = "btn btn-default btn-sm";
+            //         }else{
+            //         }
+            //     }
+            // }
+        }
+
+    </script>
+
